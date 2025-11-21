@@ -50,6 +50,7 @@ MonoBehaviour:
   doShrinking: 0
   health: 1
   healthType: 0
+  wrongToolDebuff: 4
 --- !u!1001 &2380176422899618691
 PrefabInstance:
   m_ObjectHideFlags: 0

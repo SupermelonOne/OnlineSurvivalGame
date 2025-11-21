@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doShrinking: 1
   health: 5
-  healthType: 0
+  healthType: 1
+  wrongToolDebuff: 8
 --- !u!136 &1468569188691443011
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -52,4 +52,14 @@ public class InteractWithTile : MonoBehaviour
 
 
     }
+
+    public void PlaceTile()
+    {
+        Vector3 direction = (transform.position - player.position).normalized;
+        Vector3 targetPos = player.position + (direction * .4f);
+        int x = Mathf.FloorToInt(player.transform.position.x + .5f);
+        int y = Mathf.FloorToInt(player.transform.position.z + .5f);
+        if (!TerrainGenerator.Instance.HasTile(x,y))
+            TerrainGenerator.Instance.ChangeTile(x, y, 5);
+    }
 }

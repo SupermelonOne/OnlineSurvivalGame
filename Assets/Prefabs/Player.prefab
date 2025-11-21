@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: -5878237042540972258}
   - component: {fileID: 9044112064548440426}
   - component: {fileID: 2098852814675765574}
-  - component: {fileID: -6686233647793020308}
+  - component: {fileID: 7180309475611640898}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1881882779
+  GlobalObjectIdHash: 1253081215
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -191,7 +191,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3544178197885296765}
         m_TargetAssemblyTypeName: InteractWithTile, Assembly-CSharp
-        m_MethodName: DestroyTile
+        m_MethodName: PlaceTile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -229,6 +229,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -250,11 +252,12 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!143 &-6686233647793020308
+--- !u!143 &7180309475611640898
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,8 +277,8 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 0
-  m_StepOffset: 0
+  m_SlopeLimit: 1
+  m_StepOffset: 0.1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}

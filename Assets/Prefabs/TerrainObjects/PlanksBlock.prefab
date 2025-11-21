@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doShrinking: 0
   health: 1
-  healthType: 0
+  healthType: 1
+  wrongToolDebuff: 4
 --- !u!1001 &973214219428011
 PrefabInstance:
   m_ObjectHideFlags: 0
