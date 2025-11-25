@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5da3fa2d983e11942bca5307ebee27da, type: 3}
-  m_Name: 1Log
+  m_Name: 7Leaf
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  id: 1
-  itemName: Log
+  id: 7
+  itemName: Leaf
   stackability: 99
   placableObject: {fileID: 0}
   canPlaceAsObject: 0
-  displaySprite: {fileID: 2100000, guid: 89177df9b330ca2419994a74bf1a166a, type: 2}
-  displayTexture: {fileID: 0}
+  displaySprite: {fileID: 2100000, guid: 8809ef55bcb56b543ac11b999371d2ac, type: 2}

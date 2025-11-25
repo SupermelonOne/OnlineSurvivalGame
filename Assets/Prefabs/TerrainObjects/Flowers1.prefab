@@ -49,8 +49,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doShrinking: 0
   health: 1
-  healthType: 0
+  healthType: 
   wrongToolDebuff: 4
+  hitDrop: []
+  detroyDrop:
+  - item: {fileID: 11400000, guid: 87972899d5a0a534e8ea02367557241f, type: 2}
+    chance: 0.5
+    needsCorrectTool: 0
 --- !u!1001 &2380176422899618691
 PrefabInstance:
   m_ObjectHideFlags: 0

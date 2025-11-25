@@ -12,6 +12,8 @@ using UnityEngine.UIElements;
 
 public class TerrainGenerator : NetworkBehaviour
 {
+    [SerializeField] public GameObject itemPrefab;
+
     public static TerrainGenerator Instance { get; private set; }
     //you are making the terrainData networklist functional
     //for this  you needed to make a function that queues changes (at the bottom)
@@ -32,6 +34,7 @@ public class TerrainGenerator : NetworkBehaviour
     [SerializeField] private int map_height = 9;
     [SerializeField] private float magnification = 5;
 
+    [SerializeField] Item testItem;
     private struct ObjectChange
     {
         Vector2Int position;
@@ -90,6 +93,10 @@ public class TerrainGenerator : NetworkBehaviour
         terrainDamages.OnListChanged += HandleTerrainDamage;
 
         GenerateTerrain();
+
+        SpawnItem(new Vector3(5, 0, 0), testItem.id, 1);
+        SpawnItem(new Vector3(6, 0, 0), testItem.id, 1);
+        SpawnItem(new Vector3(4, 0, 0), testItem.id, 1);
     }
 
 
@@ -115,7 +122,7 @@ public class TerrainGenerator : NetworkBehaviour
     }
     private void GenerateTerrainIds()
     {
-        List<List<bool>> treeBools = GenerateBoolList(map_width, map_height, 0, 0, magnification, .5f);
+        List<List<bool>> treeBools = GenerateBoolList(map_width, map_height, 0, 0, magnification * 2, .5f);
         List<List<bool>> flowerBools = GenerateBoolList(map_width, map_height, map_height * 3, map_width * 3, magnification, .2f);
         List<List<bool>> rockBools = GenerateBoolList(map_width, map_height, map_height, map_width, magnification, .2f);
         List<List<bool>> barrelFruitsBools = GenerateBoolList(map_width, map_height, map_height * 2, map_width * 2, magnification/2, .01f);
@@ -250,18 +257,40 @@ public class TerrainGenerator : NetworkBehaviour
     }
     public void HitTile(int x, int y, float damage, int typeOfDamage)
     {
+        if (CheckTileInRange(x, y))
+        {
+            Debug.LogWarning("in HitTile()");
+            return;
+        }
         terrainDamages.Add(new Vector4(x, y, damage, typeOfDamage));
     }
 
     //bleh functions
-    private void UpdateTileDamage(int x, int y, float damage, int typeOfDamage)
+    private void UpdateTileDamage(int x, int y, float damage, int damageType)
     {
+        if (CheckTileInRange(x, y))
+        {
+            Debug.LogWarning("in UpdateTileDamage()");
+            return;
+        }
+
         if (terrainObjectDatas[x][y] == null) //above this is where you can apply damage to things on top of this field
             return;
-        if (terrainObjectDatas[x][y].TakeDamage(damage, typeOfDamage))
+        if (IsServer)
+        {
+            List<Item> itemsToDrop = terrainObjectDatas[x][y].CheckHitDrops(damageType);
+            foreach(Item item in itemsToDrop)
+            {
+                SpawnItem(new Vector3(x, 0.5f, y), item.id, 1);
+            }
+        }
+
+        if (terrainObjectDatas[x][y].TakeDamage(damage, damageType))
         {
             ChangeTile(x, y, 0);
         }
+
+
     }
 
     private void UpdateTile(int x, int y, int newId)
@@ -324,5 +353,37 @@ public class TerrainGenerator : NetworkBehaviour
         {
             
         }
+    }
+
+    private bool CheckTileInRange(int x, int y)
+    {
+        if (!(x >= 0 && y >= 0 && x < map_width && y < map_height))
+        {
+            Debug.LogWarning("attempted change outside borders");
+            return true;
+        }
+        return false;
+    }
+
+    //[ClientRpc]
+    int objectNumber = 0;
+    private void SpawnItem(Vector3 position, int itemId, int amount)
+    {
+        if (!IsServer)
+            return;
+        GameObject spawneditem = Instantiate(itemPrefab, position, quaternion.identity);
+        NetworkObject netObj = spawneditem.GetComponent<NetworkObject>();
+
+        Item item = ItemIds.Instance.GetItemById(itemId);
+        spawneditem.name = item.itemName;
+        //add information to the item
+        PickupableItem itemReference = spawneditem.GetComponent<PickupableItem>();
+        itemReference.item = item;
+        itemReference.priority = objectNumber++;
+        itemReference.amount = amount;
+
+        netObj.Spawn();
+
+
     }
 }

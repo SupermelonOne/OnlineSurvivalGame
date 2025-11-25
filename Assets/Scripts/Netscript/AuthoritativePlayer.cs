@@ -8,8 +8,10 @@ using UnityEngine.Events;
 
 public class AuthoritativePlayer : NetworkBehaviour
 {
+    [SerializeField] private List<GameObject> localObjects = new List<GameObject>();
+
     [SerializeField] private float moveSpeed = 1;
-    private NetworkVariable<Vector3> serverPosition = new(readPerm: NetworkVariableReadPermission.Everyone, writePerm: 
+    private NetworkVariable<Vector3> serverPosition = new(readPerm: NetworkVariableReadPermission.Everyone, writePerm:
         NetworkVariableWritePermission.Server);
 
     private NetworkVariable<bool> serverAction1 = new(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
@@ -33,6 +35,7 @@ public class AuthoritativePlayer : NetworkBehaviour
 
     private float yPosition;
 
+    private float safeDistance = 0.35f;
     private struct Snapshot
     {
         public Vector3 pos;
@@ -80,7 +83,7 @@ public class AuthoritativePlayer : NetworkBehaviour
             action2 = false;
             inputSendTimer = 0;
         }
-
+        transform.position = Vector3.Lerp(transform.position, serverPosition.Value, Time.deltaTime * 10f);
     }
 
     private void Interpolate()
@@ -88,7 +91,7 @@ public class AuthoritativePlayer : NetworkBehaviour
         Snapshot[] array = snapshots.ToArray();
         Snapshot from = array[0];
         Snapshot to = array[1];
-        
+
         float duration = to.time - from.time;
 
         float elapsed = Time.time - from.time;
@@ -140,6 +143,13 @@ public class AuthoritativePlayer : NetworkBehaviour
                     snapshots.Dequeue();
                 }
             };
+        }
+        if (!IsOwner)
+        {
+            foreach (GameObject localObject in localObjects)
+            {
+                Destroy(localObject);
+            }
         }
     }
 

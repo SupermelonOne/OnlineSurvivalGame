@@ -48,8 +48,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doShrinking: 1
   health: 5
-  healthType: 1
+  healthType: 0100000002000000
   wrongToolDebuff: 8
+  hitDrops:
+  - item: {fileID: 11400000, guid: 3033821bf05e2a047b73c6cf7507ff93, type: 2}
+    chance: 0.1
+    needsCorrectTool: 0
+  detroyDrop:
+  - item: {fileID: 11400000, guid: cfa2c2007aaed42429c821f99911d6ed, type: 2}
+    chance: 1
+    needsCorrectTool: 1
+  - item: {fileID: 11400000, guid: cfa2c2007aaed42429c821f99911d6ed, type: 2}
+    chance: 0.8
+    needsCorrectTool: 1
+  - item: {fileID: 11400000, guid: cfa2c2007aaed42429c821f99911d6ed, type: 2}
+    chance: 0.5
+    needsCorrectTool: 1
+  - item: {fileID: 11400000, guid: cfa2c2007aaed42429c821f99911d6ed, type: 2}
+    chance: 0.3
+    needsCorrectTool: 0
 --- !u!136 &1468569188691443011
 CapsuleCollider:
   m_ObjectHideFlags: 0
