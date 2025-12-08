@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   id: 5
   itemName: Flint
+  stackability: 99
   placableObject: {fileID: 0}
   canPlaceAsObject: 0
   displaySprite: {fileID: 2100000, guid: 94903bb5f0e8fe243aff6183860c15da, type: 2}
+  displayTexture: {fileID: 2800000, guid: 8d53e63d59cae7d409fe4a54576d1943, type: 3}

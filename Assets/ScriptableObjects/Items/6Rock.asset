@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   id: 6
   itemName: Rock
+  stackability: 99
   placableObject: {fileID: 0}
   canPlaceAsObject: 0
   displaySprite: {fileID: 2100000, guid: 8809ef55bcb56b543ac11b999371d2ac, type: 2}
+  displayTexture: {fileID: 2800000, guid: 601c74a0a7a4da84d8a5f317d454cb01, type: 3}

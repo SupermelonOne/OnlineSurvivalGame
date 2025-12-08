@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   id: 4
   itemName: Barrel
+  stackability: 99
   placableObject: {fileID: 0}
   canPlaceAsObject: 0
   displaySprite: {fileID: 2100000, guid: 18400cf4c88329c4486b7fff16ab2881, type: 2}
+  displayTexture: {fileID: 2800000, guid: 3df210fa182b36e4fadf1de42e43a7bc, type: 3}

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   id: 3
   itemName: Stick
+  stackability: 99
   placableObject: {fileID: 0}
   canPlaceAsObject: 0
   displaySprite: {fileID: 2100000, guid: 8765f38288c864e439490bc6282d4edf, type: 2}
+  displayTexture: {fileID: 2800000, guid: d23151df4a8fd0d4fb69bc54f1ef2a64, type: 3}

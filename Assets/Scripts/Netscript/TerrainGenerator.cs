@@ -239,6 +239,8 @@ public class TerrainGenerator : NetworkBehaviour
     }
     public bool HasTile(int x, int y)
     {
+        if (CheckTileInRange(x, y))
+            Debug.Log("in HasTile");
         return (terrainObjectDatas[x][y] != null);
     }
     public void ChangeTile(int x, int y, int newId)

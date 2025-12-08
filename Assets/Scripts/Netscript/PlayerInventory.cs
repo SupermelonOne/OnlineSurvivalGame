@@ -13,10 +13,17 @@ public class PlayerInventory : NetworkBehaviour
     NetworkList<int> serverAmounts = new NetworkList<int>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
 
 
-
+    [SerializeField] private GameObject inventoryUI;
     [SerializeField] public List<Item> localItems = new List<Item>();
     [SerializeField] public List<int> localAmounts = new List<int>();
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            inventoryUI.SetActive(!inventoryUI.activeSelf);
+        }
+    }
     public override void OnNetworkSpawn()
     {
         for (int i = 0; i < inventorySize; i++)

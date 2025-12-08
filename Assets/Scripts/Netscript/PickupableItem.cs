@@ -116,7 +116,6 @@ public class PickupableItem : NetworkBehaviour
         else
         {
             itemId.Value = item.id;
-            Debug.Log(itemId.Value);
         }
     }
 }

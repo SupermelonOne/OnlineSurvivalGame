@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   id: 2
   itemName: Flowers
+  stackability: 99
   placableObject: {fileID: 0}
   canPlaceAsObject: 0
   displaySprite: {fileID: 2100000, guid: 6af7aa8c4275ea341851d43991df9705, type: 2}
+  displayTexture: {fileID: 2800000, guid: b303e49f43d826a45a32980d0064407b, type: 3}
