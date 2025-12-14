@@ -13,6 +13,7 @@ using UnityEngine.UIElements;
 public class TerrainGenerator : NetworkBehaviour
 {
     [SerializeField] public GameObject itemPrefab;
+    NetworkVariable<Vector2> spawnPosition = new NetworkVariable<Vector2>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
 
     public static TerrainGenerator Instance { get; private set; }
     //you are making the terrainData networklist functional
@@ -35,6 +36,9 @@ public class TerrainGenerator : NetworkBehaviour
     [SerializeField] private float magnification = 5;
 
     [SerializeField] Item testItem;
+
+    public bool readyForSpawning = false;
+
     private struct ObjectChange
     {
         Vector2Int position;
@@ -46,10 +50,13 @@ public class TerrainGenerator : NetworkBehaviour
         }
     }
     Queue<ObjectChange> objectChanges = new Queue<ObjectChange>();
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public override void OnNetworkSpawn()
     {
-        Instance = this;
         objectIds = FindFirstObjectByType<ObjectIds>();
         if (objectIds == null)
             return;
@@ -98,7 +105,38 @@ public class TerrainGenerator : NetworkBehaviour
         SpawnItem(new Vector3(6, 0, 0), testItem.id, 1);
         SpawnItem(new Vector3(4, 0, 0), testItem.id, 1);
     }
-
+    private void FindValidSpawnPoint()
+    {
+        List<Vector2Int> checkPositions = new List<Vector2Int>();
+        checkPositions.Add(new Vector2Int(Mathf.FloorToInt(map_width/2), Mathf.FloorToInt(map_height / 2)));
+        for(int i = 0; i < checkPositions.Count; i++)
+        {
+            if (terrainIds[checkPositions[i].x][checkPositions[i].y] == 0)
+            {
+                spawnPosition.Value = new Vector2(checkPositions[i].x, checkPositions[i].y);
+                Debug.Log("found spawn possition at: " + new Vector2(checkPositions[i].x, checkPositions[i].y));
+                break;
+            }
+            else if (checkPositions[i].x > map_width-1 || checkPositions[i].x <= 0 || checkPositions[i].y > map_height - 1 || checkPositions[i].y <= 0)
+            {
+                spawnPosition.Value = new Vector2(checkPositions[0].x, checkPositions[0].y);
+                Debug.Log("failed to find place");
+                break;
+            }
+            else
+            {
+                checkPositions.Add(new Vector2Int(checkPositions[i].x + 1, checkPositions[i].y));
+                checkPositions.Add(new Vector2Int(checkPositions[i].x - 1, checkPositions[i].y));
+                checkPositions.Add(new Vector2Int(checkPositions[i].x, checkPositions[i].y + 1));
+                checkPositions.Add(new Vector2Int(checkPositions[i].x, checkPositions[i].y - 1));
+            }
+        }
+        readyForSpawning = true;
+    }
+    public Vector2 GetSpawnPoint()
+    {
+        return spawnPosition.Value;
+    }
 
     private void CreateTileGroups()
     {
@@ -125,7 +163,7 @@ public class TerrainGenerator : NetworkBehaviour
         List<List<bool>> treeBools = GenerateBoolList(map_width, map_height, 0, 0, magnification * 3, .5f);
         List<List<bool>> flowerBools = GenerateBoolList(map_width, map_height, map_height * 3, map_width * 3, magnification, .2f);
         List<List<bool>> rockBools = GenerateBoolList(map_width, map_height, map_height, map_width, magnification * 2, .2f);
-        List<List<bool>> barrelFruitsBools = GenerateBoolList(map_width, map_height, map_height * 2, map_width * 2, magnification/2, .3f);
+        List<List<bool>> barrelFruitsBools = GenerateBoolList(map_width, map_height, map_height * 2, map_width * 2, magnification, .1f);
 
         for (int x = 0; x < map_width; x++)
         {
@@ -160,6 +198,7 @@ public class TerrainGenerator : NetworkBehaviour
                 terrainIds[x].Add(tileId);
             }
         }
+        FindValidSpawnPoint();
     }
 
     private void GenerateTerrain()
@@ -390,7 +429,5 @@ public class TerrainGenerator : NetworkBehaviour
         itemReference.amount = amount;
 
         netObj.Spawn();
-
-
     }
 }

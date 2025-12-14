@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Multiplayer.Center.NetcodeForGameObjectsExample.DistributedAuthority;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -42,6 +43,7 @@ public class AuthoritativePlayer : NetworkBehaviour
         public float time;
         public Snapshot(Vector3 p, float t)
         {
+            p.y = 0.07999992f;
             pos = p;
             time = t;
         }
@@ -49,8 +51,29 @@ public class AuthoritativePlayer : NetworkBehaviour
 
     private Queue<Snapshot> snapshots = new();
 
+    private bool spawned = false;
+
     private void Update()
     {
+        if (spawned == false)
+        {
+            if (IsServer)
+            {
+                if (TerrainGenerator.Instance.readyForSpawning)
+                {
+                    Vector2 position2d = TerrainGenerator.Instance.GetSpawnPoint();
+                    Vector3 position3d = new Vector3(position2d.x, 0, position2d.y);
+                    SetPositionServerRpc(position3d);
+                    spawned = true;
+                }
+            }
+            else
+            {
+                spawned = true;
+            }
+            return;
+        }
+
         if (snapshots.Count >= 2)
         {
             Interpolate();
@@ -96,8 +119,14 @@ public class AuthoritativePlayer : NetworkBehaviour
 
         float elapsed = Time.time - from.time;
         float t = Mathf.Clamp01(elapsed / duration);
-
-        transform.position = Vector3.Lerp(from.pos, to.pos, t);
+        try
+        {
+            transform.position = Vector3.Lerp(from.pos, to.pos, t);
+        }
+        catch(Exception e)
+        {
+            transform.position = to.pos;
+        }
 
         if (t >= 1f) snapshots.Dequeue();
     }
@@ -134,6 +163,7 @@ public class AuthoritativePlayer : NetworkBehaviour
     {
         if (IsClient)
         {
+            transform.position = serverPosition.Value;
             serverPosition.OnValueChanged += (oldVal, newVal) =>
             {
                 snapshots.Enqueue(new Snapshot(newVal, Time.time));
@@ -151,6 +181,7 @@ public class AuthoritativePlayer : NetworkBehaviour
                 Destroy(localObject);
             }
         }
+
     }
 
 
@@ -167,5 +198,13 @@ public class AuthoritativePlayer : NetworkBehaviour
         if (camera == null) return;
         camera.SetPlayer(this.transform);
     }
-
+    [ServerRpc(RequireOwnership = false)]
+    public void SetPositionServerRpc(Vector3 newPosition)
+    {
+        characterController.enabled = false;
+        Debug.Log(newPosition);
+        serverPosition.Value = newPosition;
+        transform.position = newPosition;
+        characterController.enabled = true;
+    }
 }

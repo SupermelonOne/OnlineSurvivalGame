@@ -11,6 +11,7 @@ public class FollowLocalPlayer : MonoBehaviour
         this.player = player;
         offset = transform.position - player.position;
     }
+    private int firstFrames = 5;
     void Update()
     {
         if (player == null)
@@ -18,5 +19,10 @@ public class FollowLocalPlayer : MonoBehaviour
         Vector3 targetPosition = player.position + offset;
         Vector3 direction = targetPosition - transform.position;
         transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+        if (firstFrames > 0)
+        {
+            firstFrames--;
+            transform.position = targetPosition;
+        }
     }
 }

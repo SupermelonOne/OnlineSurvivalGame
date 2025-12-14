@@ -2326,6 +2326,7 @@ MonoBehaviour:
   map_height: 400
   magnification: 2
   testItem: {fileID: 11400000, guid: 6f090531a02b4bf4a890cb68eb1d7721, type: 2}
+  readyForSpawning: 0
 --- !u!114 &1564118613
 MonoBehaviour:
   m_ObjectHideFlags: 0

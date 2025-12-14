@@ -1,7 +1,6 @@
 using System.Runtime.InteropServices;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class NetworkConnector : MonoBehaviour
@@ -12,7 +11,6 @@ public class NetworkConnector : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("did start");
         if (JoinData.Instance != null)
         {
 

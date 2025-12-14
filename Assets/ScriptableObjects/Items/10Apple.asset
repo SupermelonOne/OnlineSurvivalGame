@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59cad45318842d44a64847c9b3375fb, type: 3}
+  m_Name: 10Apple
+  m_EditorClassIdentifier: Assembly-CSharp::Placable
+  id: 10
+  itemName: Apple
+  stackability: 99
+  displaySprite: {fileID: 2100000, guid: bfa2e3759d70c96478e6f782f5bdbff5, type: 2}
+  displayTexture: {fileID: 2800000, guid: 36185b8fa6484524f8c4a10a46a37a1c, type: 3}
+  placableObject: {fileID: 3982436238627329063, guid: 97872c4d20e1db94bb6798a87eb1b5d9, type: 3}

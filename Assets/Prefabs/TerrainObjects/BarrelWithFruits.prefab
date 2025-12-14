@@ -45,9 +45,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099999c218d4e2a4fab5c11b2af3154e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doShrinking: 0
-  health: 1
-  healthType: 0
+  doShrinking: 1
+  health: 4
+  healthType: 
+  wrongToolDebuff: 4
+  hitDrops: []
+  destroyDrops:
+  - item: {fileID: 11400000, guid: 4edb4cfc1e258a64eb9aec9a3eec4bad, type: 2}
+    chance: 1
+    needsCorrectTool: 0
+  - item: {fileID: 11400000, guid: 4edb4cfc1e258a64eb9aec9a3eec4bad, type: 2}
+    chance: 1
+    needsCorrectTool: 0
+  - item: {fileID: 11400000, guid: 4edb4cfc1e258a64eb9aec9a3eec4bad, type: 2}
+    chance: 1
+    needsCorrectTool: 0
+  - item: {fileID: 11400000, guid: 4edb4cfc1e258a64eb9aec9a3eec4bad, type: 2}
+    chance: 0.5
+    needsCorrectTool: 0
+  - item: {fileID: 11400000, guid: 4edb4cfc1e258a64eb9aec9a3eec4bad, type: 2}
+    chance: 0.5
+    needsCorrectTool: 0
 --- !u!1001 &2378026725069955940
 PrefabInstance:
   m_ObjectHideFlags: 0
