@@ -9,7 +9,7 @@ using Unity.Services.Matchmaker.Models;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+//OMG ALS JE HIERMEE VERDER GAAT IN JE EIGEN TIJD, PLS SPLIT DIT TUSSEN EEN "GENERATION" CODE EN "WORLD BEHAVIOR" CODE
 public class TerrainGenerator : NetworkBehaviour
 {
     [SerializeField] public GameObject itemPrefab;
@@ -122,10 +122,10 @@ public class TerrainGenerator : NetworkBehaviour
     }
     private void GenerateTerrainIds()
     {
-        List<List<bool>> treeBools = GenerateBoolList(map_width, map_height, 0, 0, magnification * 2, .5f);
+        List<List<bool>> treeBools = GenerateBoolList(map_width, map_height, 0, 0, magnification * 3, .5f);
         List<List<bool>> flowerBools = GenerateBoolList(map_width, map_height, map_height * 3, map_width * 3, magnification, .2f);
-        List<List<bool>> rockBools = GenerateBoolList(map_width, map_height, map_height, map_width, magnification, .2f);
-        List<List<bool>> barrelFruitsBools = GenerateBoolList(map_width, map_height, map_height * 2, map_width * 2, magnification/2, .01f);
+        List<List<bool>> rockBools = GenerateBoolList(map_width, map_height, map_height, map_width, magnification * 2, .2f);
+        List<List<bool>> barrelFruitsBools = GenerateBoolList(map_width, map_height, map_height * 2, map_width * 2, magnification/2, .3f);
 
         for (int x = 0; x < map_width; x++)
         {
@@ -247,7 +247,7 @@ public class TerrainGenerator : NetworkBehaviour
     {
         if (x >= 0 && y >= 0 && x < map_width && y < map_height)
         {
-            Debug.Log("changed tile at" + x + ", " + y + " Id:" + newId);
+            //Debug.Log("changed tile at" + x + ", " + y + " Id:" + newId);
             int index = x * map_height + y;
             terrainData[index] = newId;   // this automatically syncs to all clients
             Debug.Log(index);
@@ -289,6 +289,11 @@ public class TerrainGenerator : NetworkBehaviour
 
         if (terrainObjectDatas[x][y].TakeDamage(damage, damageType))
         {
+            List<Item> itemsToDrop = terrainObjectDatas[x][y].CheckDestroyDrops(damageType);
+            foreach (Item item in itemsToDrop)
+            {
+                SpawnItem(new Vector3(x, 0.5f, y), item.id, 1);
+            }
             ChangeTile(x, y, 0);
         }
 
@@ -301,7 +306,7 @@ public class TerrainGenerator : NetworkBehaviour
         GameObject oldTile = terrainObjects[x][y];
         if (oldTile != null)
         {
-            Debug.Log("destroying" + oldTile.name); // hier  moet je de tileObjectData ook verwijderen
+            //Debug.Log("destroying" + oldTile.name); // hier  moet je de tileObjectData ook verwijderen :: wdym??? dat gebeurd toch al want nieuwe players kunnen joinen terwijl de changes blijven
             Destroy(oldTile);
         }
         else
@@ -349,7 +354,7 @@ public class TerrainGenerator : NetworkBehaviour
             int y = index % map_height;
 
             UpdateTile(x, y, change.Value);
-            Debug.Log(index);
+            //Debug.Log(index); HIER WAS EEN DEBUG LOG?HIER WAS EEN DEBUG LOG?HIER WAS EEN DEBUG LOG?HIER WAS EEN DEBUG LOG?HIER WAS EEN DEBUG LOG?HIER WAS EEN DEBUG LOG?
         }
         else if (change.Type == NetworkListEvent<int>.EventType.Add) //this happens on initial load, or when terrain expands
         {

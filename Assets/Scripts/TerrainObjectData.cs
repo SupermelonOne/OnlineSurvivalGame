@@ -12,7 +12,7 @@ public class TerrainObjectData : MonoBehaviour
 
     //list of items to drop on hit, and chance of this happening
     [SerializeField] private List<ItemDrop> hitDrops = new List<ItemDrop>();
-    [SerializeField] private List<ItemDrop> detroyDrop = new List<ItemDrop>();
+    [SerializeField] private List<ItemDrop> destroyDrops = new List<ItemDrop>();
     //list of items dropped on destroy anc chance of this happening
     private float MaxHealth;
     private void Start()
@@ -25,7 +25,7 @@ public class TerrainObjectData : MonoBehaviour
     {
         if (healthType.Contains(damageType))
         {
-            Debug.Log("correct tool");
+            //Debug.Log("correct tool");
             health -= damage;
         }
         else
@@ -35,7 +35,7 @@ public class TerrainObjectData : MonoBehaviour
 
         if (doShrinking)
         {
-            float size = ((health / MaxHealth) * 0.8f) + 0.2f;
+            float size = ((health / MaxHealth) * 0.6f) + 0.4f;
             transform.localScale = new Vector3(size, size, size);
         }
 
@@ -57,6 +57,20 @@ public class TerrainObjectData : MonoBehaviour
         }
         return returnList;
     }
-
+    public List<Item> CheckDestroyDrops(int damageType)
+    {
+        List<Item> returnList = new List<Item>();
+        foreach (ItemDrop itemDrop in destroyDrops)
+        {
+            if (!itemDrop.needsCorrectTool || healthType.Contains(damageType))
+            {
+                if (Random.Range(0f, 1f) < itemDrop.chance)
+                {
+                    returnList.Add(itemDrop.item);
+                }
+            }
+        }
+        return returnList;
+    }
     
 }

@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5da3fa2d983e11942bca5307ebee27da, type: 3}
+  m_Script: {fileID: 11500000, guid: b59cad45318842d44a64847c9b3375fb, type: 3}
   m_Name: 2Flowers
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::Placable
   id: 2
   itemName: Flowers
   stackability: 99
-  placableObject: {fileID: 0}
-  canPlaceAsObject: 0
   displaySprite: {fileID: 2100000, guid: 6af7aa8c4275ea341851d43991df9705, type: 2}
   displayTexture: {fileID: 2800000, guid: b303e49f43d826a45a32980d0064407b, type: 3}
+  placableObject: {fileID: 2697841719341292696, guid: 91cb40fbaea18e240a3cabf2083364cb, type: 3}

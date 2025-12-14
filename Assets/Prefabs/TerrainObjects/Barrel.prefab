@@ -46,9 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099999c218d4e2a4fab5c11b2af3154e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doShrinking: 0
-  health: 1
-  healthType: 0
+  doShrinking: 1
+  health: 4
+  healthType: 
+  wrongToolDebuff: 4
+  hitDrops: []
+  destroyDrops:
+  - item: {fileID: 11400000, guid: 9983f08128980934ba8283977beca8bd, type: 2}
+    chance: 1
+    needsCorrectTool: 0
 --- !u!136 &4356166489430409853
 CapsuleCollider:
   m_ObjectHideFlags: 0

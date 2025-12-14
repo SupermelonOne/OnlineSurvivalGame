@@ -49,8 +49,11 @@ MonoBehaviour:
   health: 1
   healthType: 0100000002000000
   wrongToolDebuff: 4
-  hitDrop: []
-  detroyDrop: []
+  hitDrops: []
+  destroyDrops:
+  - item: {fileID: 11400000, guid: 6f090531a02b4bf4a890cb68eb1d7721, type: 2}
+    chance: 1
+    needsCorrectTool: 0
 --- !u!1001 &973214219428011
 PrefabInstance:
   m_ObjectHideFlags: 0

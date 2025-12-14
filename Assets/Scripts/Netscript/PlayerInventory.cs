@@ -1,10 +1,13 @@
 using NUnit.Framework;
+using SA.EventBusSystem;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using Unity.Services.Matchmaker.Models;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
+
 
 public class PlayerInventory : NetworkBehaviour
 {
@@ -13,9 +16,12 @@ public class PlayerInventory : NetworkBehaviour
     NetworkList<int> serverAmounts = new NetworkList<int>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
 
 
+
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] public List<Item> localItems = new List<Item>();
     [SerializeField] public List<int> localAmounts = new List<int>();
+    [SerializeField] private List<int> totalAmounts = new List<int>();
+
 
     private void Update()
     {
@@ -44,6 +50,10 @@ public class PlayerInventory : NetworkBehaviour
                 serverAmounts.Add(0);
             }
         }
+        for (int i = 0; i <= ItemIds.Instance.GetItemAmount(); i++)
+        {
+            totalAmounts.Add(0);
+        }
     }
     public void AddItem(Item item, int amount)
     {
@@ -69,6 +79,8 @@ public class PlayerInventory : NetworkBehaviour
                     //server sided variable updated
                     serverAmounts[i] += add;
 
+                    totalAmounts[item.id] += add;
+                    InventoryEventBus<ItemCollected>.Publish(new ItemCollected(i));
 
                     if (amountToAdd <= 0)
                         return; // everything is added
@@ -92,21 +104,72 @@ public class PlayerInventory : NetworkBehaviour
 
                 amountToAdd -= add;
 
+                InventoryEventBus<ItemCollected>.Publish(new ItemCollected(i));
+                totalAmounts[item.id] += add;
+
                 if (amountToAdd <= 0)
                     return;
             }
         }
-        
+
         //DROP LEFTOVERS AGAIN
+
+        //MAKE INVENTORY SLOTS UPDATE IF YOU ARE THE HOST AS WELL
+    }
+    //Remove Item (and maybe add item as well idk rn, timeline crunch) have to be rewritten and the server than also subscribes on the list changes
+    public void RemoveItem(Item item, int amount) //maybe change this to bool checking if it was able to remove enough items
+    {
+        if (!IsServer) return;
+        int itemId = item.id;
+        int amountToRemove = amount;
+
+        for (int i = 0; i < inventorySize; i++)
+        {
+            if (serverItems[i] == itemId)
+            {
+                if (serverAmounts[i] > amountToRemove)
+                {
+                    serverAmounts[i] -= amountToRemove;
+                    localAmounts[i] -= amountToRemove;
+                    InventoryEventBus<ItemCollected>.Publish(new ItemCollected(i));
+
+                    break;
+                }
+                else
+                {
+                    amountToRemove -= localAmounts[i];
+                    serverAmounts[i] = 0;
+                    localAmounts[i] = 0;
+                    localItems[i] = null;
+                    serverItems[i] = 0;
+                    InventoryEventBus<ItemCollected>.Publish(new ItemCollected(i));
+
+                }
+            }
+        }
+
     }
 
     private void HandleItemChange(NetworkListEvent<int> change)
     {
+        if (change.Value == 0)
+        {
+            localItems[change.Index] = null;
+            return;
+        }
         localItems[change.Index] = ItemIds.Instance.GetItemById(change.Value);
+        if (IsOwner)
+        {
+            InventoryEventBus<ItemCollected>.Publish(new ItemCollected(change.Index));
+        }
     }
     private void HandleAmountChange(NetworkListEvent<int> change)
     {
         localAmounts[change.Index] = change.Value;
+        if (IsOwner)
+        {
+            InventoryEventBus<ItemCollected>.Publish(new ItemCollected(change.Index));
+        }
     }
 
     public bool HaveSpaceFor(Item item)
@@ -133,8 +196,8 @@ public class PlayerInventory : NetworkBehaviour
         }
         return false;
     }
-
-    public void TakeFullSlot(int index)
+    int previousValue = 0;
+    public void TakeFullSlot(int index, bool UpdateNet = true)
     {
         if (localItems[0] == null)
         {
@@ -142,6 +205,10 @@ public class PlayerInventory : NetworkBehaviour
             localItems[index] = null;
             localAmounts[0] = localAmounts[index];
             localAmounts[index] = 0;
+            if (UpdateNet)
+                ChangeItemSlotServerRpc(index, 0);
+
+            previousValue = index;
         }
         else
         {
@@ -151,13 +218,86 @@ public class PlayerInventory : NetworkBehaviour
             localAmounts[index] = localAmounts[0];
             localItems[0] = replaceItem;
             localAmounts[0] = replaceAmount;
+
+            //send moved info over
+            if (UpdateNet)
+                ChangeItemSlotServerRpc(0, index);
         }
     }
+    [ServerRpc(RequireOwnership = false)]
+    private void ChangeItemSlotServerRpc(int slot1, int slot2)
+    {
+        if (!IsServer) return;
+        //Debug.Log("banana");
+        int keepItem = serverItems[slot1];
+        int keepAmount = serverAmounts[slot1];
+        serverItems[slot1] = serverItems[slot2];
+        serverAmounts[slot1] = serverAmounts[slot2];
+        serverItems[slot2] = keepItem;
+        serverAmounts[slot2] = keepAmount;
+        if (!IsOwner)
+        {
+            TakeFullSlot(slot1, false);
+            TakeFullSlot(slot2, false);
+        }
+    }
+    public int GetAmountOfItem(int itemId)
+    {
+        int amount = 0;
+        for (int i = 0; i < inventorySize; i++)
+        {
 
+            if (localItems[i] != null && localItems[i].id == itemId)
+            {
+                amount += localAmounts[i];
+            }
+        }
+        return amount;
+    }
+    //this is all server side checking
+    public int GetAmountOfItem(Item item)
+    {
+        return GetAmountOfItem(item.id);
+    }
+    public void CraftItem(int reciptId)
+    {
+        OnlineCraftServerRpc(reciptId);
+    }
+    [ServerRpc]
+    public void OnlineCraftServerRpc(int reciptId)
+    {
+        if (!IsServer)
+            return;
+        if (CraftingChecker.CanCraft(this, RecipeDatas.Instance.GetRecipeById(reciptId)))
+        {
+            HandleCraftingServerRpc(reciptId);
+        }
+    }
+    [ServerRpc(RequireOwnership = false)] //MAKE THIS SERVER ONLY LATER
+    private void HandleCraftingServerRpc(int recipeId)
+    {
+        if (!IsServer)
+            return;
+        List<RecipePart> requirements = new List<RecipePart>(RecipeDatas.Instance.GetRecipeById(recipeId).requirements);
+        foreach (RecipePart part in requirements)
+        {
+            RemoveItem(part.item, part.amount);
+        }
+        List<RecipePart> results = new List<RecipePart>(RecipeDatas.Instance.GetRecipeById(recipeId).results);
+        foreach(RecipePart part in results)
+        {
+            AddItem(part.item, part.amount);
+        }
+
+    }
+
+    /*    public bool GetAmountOfItem(int itemId, int amount)
+        {
+            return (totalAmounts[itemId] >= amount);
+        }
+        public bool GetAmountOfItem(Item item, int amount)
+        {
+            return GetAmountOfItem(item.id, amount);
+        }*/
 }
 
-//check of ( localAmounts + amount ) % item.Stackability < localAmounts % item.Stackability
-//dat betekend dat een stack ge-overflowed heeft en de rest een nieuwe slot in moet
-//maak ook een tackCheck die een bool terugsstuurd naar item op de grond of je al vol zit van het item
-//of SPECEFIEK dat item nog ruimte heb, of gwn algemeen nog ruimte hebt
-//zo niet moet die niet op jou attachen en achterna zitten

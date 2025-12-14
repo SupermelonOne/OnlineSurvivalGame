@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463e702d63e5cdb45b29ac3a57c41458, type: 3}
+  m_Name: 2Barrel
+  m_EditorClassIdentifier: Assembly-CSharp::Recipe
+  recipeName: Barrel
+  results:
+  - amount: 1
+    item: {fileID: 11400000, guid: 9983f08128980934ba8283977beca8bd, type: 2}
+  requirements:
+  - amount: 2
+    item: {fileID: 11400000, guid: cfa2c2007aaed42429c821f99911d6ed, type: 2}
+  - amount: 1
+    item: {fileID: 11400000, guid: 379f8976c8dc0da4eaba7b355a0d80a9, type: 2}

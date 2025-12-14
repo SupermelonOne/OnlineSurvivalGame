@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5635796776931786350}
   - component: {fileID: 2439781629724019128}
   - component: {fileID: 5010718541462970150}
+  - component: {fileID: 5225434464297249233}
+  - component: {fileID: 576025642445388067}
   m_Layer: 5
   m_Name: InventorySlot
   m_TagString: Untagged
@@ -77,6 +79,40 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5225434464297249233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176807013987039131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ca71949e2239a428eae41404ed8cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  myIndex: 1
+  myInventory: {fileID: 0}
+  showItem: {fileID: 576025642445388067}
+--- !u!114 &576025642445388067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176807013987039131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2c6036bf1559d458597b69d64ef996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShowItem
+  myInventory: {fileID: 0}
+  myIndex: 0
+  myRawImage: {fileID: 7030092811378829606}
+  myItem: {fileID: 0}
+  emptyTexture: {fileID: 2800000, guid: 6726b1bb09f7947488ee97b9432b304e, type: 3}
+  itemAmountText: {fileID: 4936563935745596300}
+  updateEveryClick: 0
 --- !u!1 &3083983765804446386
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +178,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: b6e92b5140e748a4c898d7d03b18e4ec, type: 3}
+  m_Texture: {fileID: 2800000, guid: ebea560dfcad98d4d831f970022a15c6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

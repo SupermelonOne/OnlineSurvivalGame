@@ -54,7 +54,10 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 3033821bf05e2a047b73c6cf7507ff93, type: 2}
     chance: 0.1
     needsCorrectTool: 0
-  detroyDrop:
+  - item: {fileID: 11400000, guid: 2f6485356da95504d9468917bc205ef8, type: 2}
+    chance: 0.1
+    needsCorrectTool: 0
+  destroyDrops:
   - item: {fileID: 11400000, guid: cfa2c2007aaed42429c821f99911d6ed, type: 2}
     chance: 1
     needsCorrectTool: 1

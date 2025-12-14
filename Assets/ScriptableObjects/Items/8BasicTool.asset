@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9092eb588286199478a8984c88e926a0, type: 3}
+  m_Name: 8BasicTool
+  m_EditorClassIdentifier: Assembly-CSharp::Tool
+  id: 8
+  itemName: Basic Tool
+  stackability: 1
+  placableObject: {fileID: 0}
+  canPlaceAsObject: 0
+  displaySprite: {fileID: 2100000, guid: 76919eb43c3bb74438ef3a99a0ce24b6, type: 2}
+  displayTexture: {fileID: 2800000, guid: 555cf249392df4d469a05744caa07527, type: 3}
+  toolType: 1

@@ -64,11 +64,11 @@ public class AuthoritativePlayer : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetMouseButtonDown(0))
         {
             action1 = true;
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetMouseButtonDown(1))
         {
             action2 = true;
         }

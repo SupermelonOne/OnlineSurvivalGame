@@ -51,10 +51,10 @@ MonoBehaviour:
   health: 1
   healthType: 
   wrongToolDebuff: 4
-  hitDrop: []
-  detroyDrop:
-  - item: {fileID: 11400000, guid: 87972899d5a0a534e8ea02367557241f, type: 2}
-    chance: 0.5
+  hitDrops: []
+  destroyDrops:
+  - item: {fileID: 11400000, guid: 3d53bb2ef4cf2e74dbb55f86de1d2d96, type: 2}
+    chance: 1
     needsCorrectTool: 0
 --- !u!1001 &2380176422899618691
 PrefabInstance:
