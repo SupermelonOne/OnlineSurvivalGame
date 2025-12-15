@@ -1957,6 +1957,8 @@ MonoBehaviour:
     id: 8
   - item: {fileID: 11400000, guid: 6f090531a02b4bf4a890cb68eb1d7721, type: 2}
     id: 9
+  - item: {fileID: 11400000, guid: 4edb4cfc1e258a64eb9aec9a3eec4bad, type: 2}
+    id: 10
 --- !u!114 &1248523797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1982,6 +1984,8 @@ MonoBehaviour:
     id: 5
   - obj: {fileID: 5904313496836449625, guid: 0028738be2528b044968d680a47e7394, type: 3}
     id: 6
+  - obj: {fileID: 3982436238627329063, guid: 97872c4d20e1db94bb6798a87eb1b5d9, type: 3}
+    id: 7
 --- !u!4 &1248523798
 Transform:
   m_ObjectHideFlags: 0
@@ -2020,6 +2024,8 @@ MonoBehaviour:
     recipe: {fileID: 11400000, guid: 083017bb94c33b04b8c4839cad35ba3b, type: 2}
   - id: 4
     recipe: {fileID: 11400000, guid: c4cd8642667566140ae0d77c1f49349e, type: 2}
+  - id: 5
+    recipe: {fileID: 11400000, guid: fc9834a2f63ae2346a42a0cac47d79d5, type: 2}
 --- !u!1 &1308948717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,9 +2067,9 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 77.165.152.161
-    Port: 19132
-    ServerListenAddress: 0.0.0.0
+    Address: 127.0.0.1
+    Port: 7777
+    ServerListenAddress: 127.0.0.1
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
@@ -2274,6 +2280,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362585803}
   m_CullTransparentMesh: 1
+--- !u!1 &1409101887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409101888}
+  m_Layer: 0
+  m_Name: TerrainObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1409101888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409101887}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1564118609
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,11 +2359,12 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   itemPrefab: {fileID: 1505883481005567244, guid: 126a55ba3b239da40a80429fc353c056, type: 3}
   objectIds: {fileID: 1248523797}
-  map_width: 400
-  map_height: 400
+  map_width: 200
+  map_height: 200
   magnification: 2
   testItem: {fileID: 11400000, guid: 6f090531a02b4bf4a890cb68eb1d7721, type: 2}
   readyForSpawning: 0
+  terrainTransform: {fileID: 1409101888}
 --- !u!114 &1564118613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2476,4 +2514,5 @@ SceneRoots:
   - {fileID: 569667422}
   - {fileID: 1221261473}
   - {fileID: 1564118611}
+  - {fileID: 1409101888}
   - {fileID: 105001074}

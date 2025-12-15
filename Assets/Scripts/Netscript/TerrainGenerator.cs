@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using Unity.Netcode;
 using Unity.Services.Matchmaker.Models;
 using Unity.VisualScripting;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.UIElements;
 //OMG ALS JE HIERMEE VERDER GAAT IN JE EIGEN TIJD, PLS SPLIT DIT TUSSEN EEN "GENERATION" CODE EN "WORLD BEHAVIOR" CODE
@@ -38,6 +39,8 @@ public class TerrainGenerator : NetworkBehaviour
     [SerializeField] Item testItem;
 
     public bool readyForSpawning = false;
+
+    [SerializeField] private Transform terrainTransform;
 
     private struct ObjectChange
     {
@@ -100,10 +103,6 @@ public class TerrainGenerator : NetworkBehaviour
         terrainDamages.OnListChanged += HandleTerrainDamage;
 
         GenerateTerrain();
-
-        SpawnItem(new Vector3(5, 0, 0), testItem.id, 1);
-        SpawnItem(new Vector3(6, 0, 0), testItem.id, 1);
-        SpawnItem(new Vector3(4, 0, 0), testItem.id, 1);
     }
     private void FindValidSpawnPoint()
     {
@@ -145,7 +144,7 @@ public class TerrainGenerator : NetworkBehaviour
         for (int i = 1; i <= objectIds.GetObjectAmount(); i++)
         {
             GameObject tileGroup = new GameObject(objectIds.GetObjectById(i).name + " Id: " + i);
-            tileGroup.transform.parent = transform;
+            tileGroup.transform.parent = terrainTransform;
             tileGroup.transform.localPosition = Vector3.zero;
             tileGroups.Add(i, tileGroup);
         }
