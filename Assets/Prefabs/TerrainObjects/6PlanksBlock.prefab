@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7161348268952686861}
   - component: {fileID: -1613036846081047652}
   m_Layer: 0
-  m_Name: PlanksBlock
+  m_Name: 6PlanksBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

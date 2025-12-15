@@ -154,6 +154,78 @@ Transform:
   - {fileID: 152022820}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &118765512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 118765515}
+  - component: {fileID: 118765513}
+  - component: {fileID: 118765514}
+  m_Layer: 0
+  m_Name: VersionChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &118765513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118765512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2866294658
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &118765514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118765512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfdd0a05e17c85448befbc0dbaec720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VersionChecker
+  ShowTopMostFoldoutHeaderGroup: 1
+  version: 0.0.2
+--- !u!4 &118765515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118765512}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &152022816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,6 +2029,8 @@ MonoBehaviour:
     id: 8
   - item: {fileID: 11400000, guid: 6f090531a02b4bf4a890cb68eb1d7721, type: 2}
     id: 9
+  - item: {fileID: 11400000, guid: 4edb4cfc1e258a64eb9aec9a3eec4bad, type: 2}
+    id: 10
 --- !u!114 &1248523797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1982,6 +2056,8 @@ MonoBehaviour:
     id: 5
   - obj: {fileID: 5904313496836449625, guid: 0028738be2528b044968d680a47e7394, type: 3}
     id: 6
+  - obj: {fileID: 3982436238627329063, guid: 97872c4d20e1db94bb6798a87eb1b5d9, type: 3}
+    id: 7
 --- !u!4 &1248523798
 Transform:
   m_ObjectHideFlags: 0
@@ -2020,6 +2096,8 @@ MonoBehaviour:
     recipe: {fileID: 11400000, guid: 083017bb94c33b04b8c4839cad35ba3b, type: 2}
   - id: 4
     recipe: {fileID: 11400000, guid: c4cd8642667566140ae0d77c1f49349e, type: 2}
+  - id: 5
+    recipe: {fileID: 11400000, guid: fc9834a2f63ae2346a42a0cac47d79d5, type: 2}
 --- !u!1 &1308948717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2468,6 +2546,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 330585546}
+  - {fileID: 118765515}
   - {fileID: 1248523798}
   - {fileID: 410087041}
   - {fileID: 832575519}
